@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "spring.storage.file-directory",
+      "type": "java.lang.String",
+      "description": "Diretorio onde vão ficar os curriculos enviados"
+  }, {
+      "name": "spring.admin.username",
+      "type": "java.lang.String",
+      "description": "Username do usuario admin"
+    }, {
+      "name": "spring.admin.password",
+      "type": "java.lang.String",
+      "description": "Password do usuario admin"
+    }
+] }

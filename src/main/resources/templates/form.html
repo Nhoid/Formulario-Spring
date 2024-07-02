@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .card-custom {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header-custom {
+            background-color: darkgray;
+            color: white;
+        }
+        .form-floating .form-control:focus~label {
+            color: darkgray;
+        }
+        .form-floating textarea {
+            height: 150px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card card-custom">
+                <div class="card-header card-header-custom">
+                    <h2 class="text-center">Formulário</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" role="form" th:action="@{/form/send}" th:object="${curriculo}" enctype="multipart/form-data">
+
+                        <!-- Nome -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingNome" placeholder="Digite seu nome" name="name" th:field="*{nome}">
+                            <label for="floatingNome">Nome:</label>
+                            <p th:errors="*{nome}" class="text-danger" th:if="${#fields.hasErrors('nome')}"></p>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingEmail" placeholder="Digite seu email" name="email" th:field="*{email}">
+                            <label for="floatingEmail">Email:</label>
+                            <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="floatingTelefone" placeholder="Digite seu telefone" name="telefone" th:field="*{telefone}">
+                            <label for="floatingTelefone">Telefone:</label>
+                            <p th:errors="*{telefone}" class="text-danger" th:if="${#fields.hasErrors('telefone')}"></p>
+                        </div>
+
+                        <!-- Cargo Pretendido -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingCargo" placeholder="Digite o cargo pretendido" name="cargo" th:field="*{cargo}">
+                            <label for="floatingCargo">Cargo Pretendido:</label>
+                            <p th:errors="*{cargo}" class="text-danger" th:if="${#fields.hasErrors('cargo')}"></p>
+                        </div>
+
+                        <!-- Escolaridade -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingEscolaridade" name="escolaridade" th:field="*{escolaridade}">
+                                <option value="FUNDAMENTAL_INCOMPLETO">Fundamental Incompleto</option>
+                                <option value="FUNDAMENTAL">Fundamental</option>
+                                <option value="MEDIO_INCOMPLETO">Médio Incompleto</option>
+                                <option value="MEDIO">Médio</option>
+                                <option value="SUPERIOR_INCOMPLETO">Superior Incompleto</option>
+                                <option value="SUPERIOR">Superior</option>
+                            </select>
+                            <label for="floatingEscolaridade">Escolaridade:</label>
+                        </div>
+
+                        <!-- Observação -->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="floatingObservacao" rows="6" placeholder="Digite suas observações" name="observacoes" th:field="*{observacoes}"></textarea>
+                            <label for="floatingObservacao">Observação:</label>
+                        </div>
+
+                        <!-- Upload de Currículo -->
+                        <div class="form-group mb-3">
+                            <label>Envie seu currículo (DOC, DOCX, PDF):</label>
+                            <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept=".doc, .docx, .pdf" name="file" th:field="*{multipartFile}">
+                            <p th:errors="*{multipartFile}" class="text-danger" th:if="${#fields.hasErrors('multipartFile')}"></p>
+                        </div>
+
+                        <!-- Botão de Enviar -->
+                        <div class="form-group mb-3 text-center">
+                            <button class="btn btn-primary" type="submit">Enviar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
