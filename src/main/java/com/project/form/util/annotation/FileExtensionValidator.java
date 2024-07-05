@@ -22,7 +22,7 @@ public class FileExtensionValidator implements ConstraintValidator<FileExtension
         String originalName = multipartFile.getOriginalFilename();
 
         if (originalName == null || originalName.trim().isEmpty() || originalName.isBlank()) {
-            return false; // Arquivo sem nome
+            return true; // Arquivo nao enviado, NotEmptyFile vai lancar exception
         }
 
         for (String extension : allowedExtensions) {

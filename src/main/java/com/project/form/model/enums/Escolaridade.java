@@ -1,5 +1,8 @@
 package com.project.form.model.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Escolaridade {
 
     FUNDAMENTAL_INCOMPLETO("FUNDAMENTAL_INCOMPLETO"),
@@ -13,10 +16,6 @@ public enum Escolaridade {
 
     Escolaridade(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public static Escolaridade valueOfString(String valor) {

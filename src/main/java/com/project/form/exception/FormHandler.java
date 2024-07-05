@@ -1,6 +1,7 @@
-package com.project.form.errorhandler;
+package com.project.form.exception;
 
 
+import com.project.form.model.dto.CurriculoDTOInput;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.logging.Logger;
 
@@ -28,5 +30,18 @@ public class FormHandler {
 
         return "form";
     }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public String handleMaxUploadSizeExceeded(MaxUploadSizeExceededException ex, Model model) {
+
+        model.addAttribute("curriculo", new CurriculoDTOInput());
+
+        model.addAttribute("sizeError", "Tamanho do arquivo excede limite");
+
+        return "form";
+    }
+
+
 
 }

@@ -8,33 +8,113 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Minha Página</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-primary" href="/admin">Administração</a> <!-- Botão de Administração -->
-        </li>
-      </ul>
+<div class="container mt-5">
+  <!-- Botoes de controle de vagas e fomulario acima do Formulário de Filtro -->
+  <div class="mb-3 container">
+    <a href="/form" class="btn btn-primary me-3 ">Formulário</a>
+    <a href="/admin/vaga" class="btn btn-primary">Controle de Vagas</a>
+    <a href="/logout" methods="post" class="btn btn-primary btn-danger float-end">Logout</a>
+  </div>
+
+  <!-- Formulário de Filtro -->
+  <form th:action="@{/admin/filter}" method="get">
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-4">
+        <label for="dataInicio" class="form-label">Data de Início:</label>
+        <input type="date" id="dataInicio" name="dataInicio" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <label for="dataFim" class="form-label">Data de Fim:</label>
+        <input type="date" id="dataFim" name="dataFim" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <label for="vaga" class="form-label">Vaga:</label>
+        <select id="vaga" name="vaga" class="form-select">
+          <option value="">Selecione uma vaga</option>
+          <!-- Iterar sobre a lista de vagas para preencher as opções -->
+          <option th:each="vaga : ${vagas}" th:value="${vaga.id}" th:text="${vaga.getNomeDaVaga()}"></option>
+        </select>
+      </div>
+        <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+    </div>
+  </form>
+
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card-columns">
+        <!-- Iteração sobre a lista de currículos -->
+        <div th:each="curriculo : ${curriculos}" th:id="'curriculoCard-' + ${curriculo.getId()}">
+          <div class="card mb-3" id="">
+
+            <div class="card-body">
+              <h5 class="card-title" th:text="${curriculo.nome}">Nome</h5>
+              <p class="card-text">
+                <strong>Email:</strong> <span th:text="${curriculo.email}">example@example.com</span><br>
+                <strong>Telefone:</strong> <span th:text="${curriculo.telefone}">(00) 1234-5678</span><br>
+                <strong>Cargo Desejado:</strong> <span th:text="${curriculo.cargoDesejado}">Desenvolvedor</span><br>
+                <strong>Escolaridade:</strong> <span th:text="${curriculo.escolaridade}">Superior Completo</span><br>
+                <strong>Observações:</strong> <span th:text="${curriculo.observacoes}">Nenhuma observação.</span><br>
+                <strong>Data de inscrição:</strong> <span th:text="${curriculo.dataCadastro}">2000-01-01.</span><br>
+              </p>
+              <div class="float-start">
+                <a th:href="@{'admin/curriculo/' + ${curriculo.id}}" class="btn btn-success me-2">
+                  Baixar Currículo
+                </a>
+                <p th:text="${fileNotFound}" class="text-danger" th:if="${fileNotFound != null}"></p>
+              </div>
+
+              <div class="float-end">
+                <button class="btnDesclassificar btn btn-danger" type="button" th:attr="data-curriculo-id=${curriculo.id}">Desclassificar</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   </div>
-</nav>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:inline="javascript">
+    $(document).ready(function() {
+      // Função para ajustar o placeholder para dd-MM-yyyy
+      function ajustarPlaceholders() {
+        $('#dataInicio, #dataFim').on('focus', function() {
+          $(this).attr('placeholder', 'dd-MM-yyyy');
+        }).on('blur', function() {
+          $(this).attr('placeholder', '');
+        });
+      }
+
+      ajustarPlaceholders(); // Chama a função ao carregar a página
+    });
+
+
+    $(document).ready(function() {
+      $('.container').on('click', '.btnDesclassificar', function() {
+        var curriculoId = $(this).data('curriculo-id');
+
+        if (confirm('Deseja realmente desclassificar este currículo?')) {
+          $.ajax({
+            url: 'admin/remove/' + curriculoId,
+            type: 'DELETE',
+            success: function(result) {
+              // Atualize a interface ou faça qualquer ação necessária após a exclusão
+              alert('Currículo desclassificado com sucesso!');
+              // Exemplo: remover o card da lista após a exclusão
+              $('#curriculoCard-' + curriculoId).remove();
+            },
+            error: function(xhr, status, error) {
+              alert('Ocorreu um erro ao desclassificar o currículo: ' + error);
+            }
+          });
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

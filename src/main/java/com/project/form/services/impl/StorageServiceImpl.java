@@ -1,7 +1,7 @@
-package com.project.form.services;
+package com.project.form.services.impl;
 
 import com.project.form.storage.StorageProperties;
-import com.project.form.storage.StorageService;
+import com.project.form.services.StorageService;
 import com.project.form.storage.exception.StorageException;
 import com.project.form.storage.exception.StorageFileNotFoundException;
 import jakarta.annotation.PostConstruct;
@@ -38,14 +38,21 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String store(MultipartFile file) {
+    public String store(MultipartFile file, String name) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Arquivo vázio.");
             }
 
+            // Nome do arquivo original
+            String originalFilename = Objects.requireNonNull(file.getOriginalFilename());
+
+            // Novo nome do arquivo, incluindo o nome da pessoa
+            String newFilename = name + "_" + originalFilename;
+
+            // Caminho do arquivo de destino
             Path destinationFile = this.rootLocation.resolve(
-                            Paths.get(Objects.requireNonNull(file.getOriginalFilename())))
+                            Paths.get(newFilename))
                     .normalize().toAbsolutePath();
 
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
@@ -102,6 +109,11 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    @Override
+    public void delete(Path path) {
+        path.toFile().delete();
     }
 
     @Override

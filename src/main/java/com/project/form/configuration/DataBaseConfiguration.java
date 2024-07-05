@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableConfigurationProperties({FlywayProperties.class})
-public class DataBaseConfig {
+public class DataBaseConfiguration {
 
     //CONFIGURACOES DEFINIDAS NO APPLICATION PROPERTIES
     @Value("${spring.datasource.url}")

@@ -56,8 +56,14 @@
 
                         <!-- Cargo Pretendido -->
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingCargo" placeholder="Digite o cargo pretendido" name="cargo" th:field="*{cargo}">
-                            <label for="floatingCargo">Cargo Pretendido:</label>
+                            <select class="form-select" id="floatingCargo" name="cargo" th:field="*{cargo}">
+                                <option value="" th:if="${vagas.size() > 0}" selected>Selecione uma vaga</option>
+                                <option th:each="vaga : ${vagas}"
+                                        th:value="${vaga.getId()}"
+                                        th:text="${vaga.getNomeDaVaga()}"></option>
+                                <option value="" th:if="${vagas.size() == 0}">Sem Cargos disponíveis</option>
+                            </select>
+                            <label for="floatingCargo">Cargo:</label>
                             <p th:errors="*{cargo}" class="text-danger" th:if="${#fields.hasErrors('cargo')}"></p>
                         </div>
 
@@ -74,25 +80,30 @@
                             <label for="floatingEscolaridade">Escolaridade:</label>
                         </div>
 
-                        <!-- Observação -->
+                        <!-- Observacao -->
                         <div class="form-floating mb-3">
                             <textarea class="form-control" id="floatingObservacao" rows="6" placeholder="Digite suas observações" name="observacoes" th:field="*{observacoes}"></textarea>
                             <label for="floatingObservacao">Observação:</label>
                         </div>
 
-                        <!-- Upload de Currículo -->
+                        <!-- Upload de Curriculo -->
                         <div class="form-group mb-3">
                             <label>Envie seu currículo (DOC, DOCX, PDF):</label>
                             <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept=".doc, .docx, .pdf" name="file" th:field="*{multipartFile}">
                             <p th:errors="*{multipartFile}" class="text-danger" th:if="${#fields.hasErrors('multipartFile')}"></p>
+                            <p th:text="${sizeError}" class="text-danger" th:if="${sizeError != null}"></p>
                         </div>
 
-                        <!-- Botão de Enviar -->
+                        <!-- Botao de Enviar -->
                         <div class="form-group mb-3 text-center">
                             <button class="btn btn-primary" type="submit">Enviar</button>
                         </div>
 
                     </form>
+                    <!-- Botao para Adm -->
+                    <div class="text-end mt-3">
+                        <a href="/admin" class="btn btn-secondary">Admin</a>
+                    </div>
                 </div>
             </div>
         </div>
