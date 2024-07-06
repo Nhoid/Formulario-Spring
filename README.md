@@ -8,6 +8,39 @@ Este projeto é um sistema de Formulário de Currículo desenvolvido utilizando 
 - Fornecer uma interface intuitiva para candidatos e administradores.
 - Permitir o gerenciamento eficiente de candidatos e vagas disponíveis através de uma página de administração.
 
+### Funcionalidades Principais
+
+1. **Formulário de Cadastro de Currículo**
+   - Interface para os candidatos preencherem e enviarem seus currículos.
+   - Utiliza Thymeleaf para renderização dinâmica da interface do formulário.
+   - Validação de entrada de dados usando anotações do Spring.
+
+2. **Página de Administração**
+   - Interface administrativa para gerenciar currículos e vagas.
+   - Permite filtrar candidatos por critérios como data de envio, status, etc.
+   - Funcionalidades para baixar currículos dos candidatos.
+
+3. **Controle de Vagas**
+   - Gerenciamento das vagas disponíveis e fechamento quando necessário.
+   - Interface para adicionar e remover vagas.
+   - Funcionalidades para desqualificar candidatos de vagas específicas.
+
+### Exemplos de Casos de Uso
+
+- **Cadastro de Novo Currículo:**
+   - Um candidato acessa a interface do formulário, preenche os campos obrigatórios e envia seu currículo.
+   - O sistema valida os dados e os armazena no banco de dados.
+
+- **Administração de Currículos:**
+   - Um administrador acessa a página de administração, filtra os currículos por critérios específicos (por exemplo, data de envio).
+   - O administrador visualiza os detalhes dos currículos dos candidatos e pode baixá-los conforme necessário.
+
+- **Gestão de Vagas:**
+   - Um administrador acessa a interface de administração de vagas, onde pode adicionar ou remover vagas.
+   - O administrador controla o status das vagas, abrindo ou fechando de acordo com a necessidade da empresa.
+
+
+
 ### Tecnologias Utilizadas
 
 Além do Spring Framework, este projeto utiliza as seguintes tecnologias principais:
@@ -79,36 +112,6 @@ Estes passos garantem que você tenha um ambiente configurado para desenvolver e
 
 - **FormProjectApplication.java**: Classe principal de inicialização do Spring Boot.
 
-### Funcionalidades Principais
-
-1. **Formulário de Cadastro de Currículo**
-    - Interface para os candidatos preencherem e enviarem seus currículos.
-    - Utiliza Thymeleaf para renderização dinâmica da interface do formulário.
-    - Validação de entrada de dados usando anotações do Spring.
-
-2. **Página de Administração**
-    - Interface administrativa para gerenciar currículos e vagas.
-    - Permite filtrar candidatos por critérios como data de envio, status, etc.
-    - Funcionalidades para baixar currículos dos candidatos.
-
-3. **Controle de Vagas**
-    - Gerenciamento das vagas disponíveis e fechamento quando necessário.
-    - Interface para adicionar, editar e remover vagas.
-    - Funcionalidades para desqualificar candidatos de vagas específicas.
-
-### Exemplos de Casos de Uso
-
-- **Cadastro de Novo Currículo:**
-    - Um candidato acessa a interface do formulário, preenche os campos obrigatórios e envia seu currículo.
-    - O sistema valida os dados e os armazena no banco de dados.
-
-- **Administração de Currículos:**
-    - Um administrador acessa a página de administração, filtra os currículos por critérios específicos (por exemplo, data de envio).
-    - O administrador visualiza os detalhes dos currículos dos candidatos e pode baixá-los conforme necessário.
-
-- **Gestão de Vagas:**
-    - Um administrador acessa a interface de administração de vagas, onde pode adicionar, editar ou remover vagas.
-    - O administrador controla o status das vagas, abrindo ou fechando de acordo com a necessidade da empresa.
 
 
 
