@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 public class AdminAuthView {
 
-
+    // INTERFACE DE LOGIN
     @GetMapping("/login")
     public String login(Model model) {
         return "login";

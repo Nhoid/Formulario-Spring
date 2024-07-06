@@ -1,13 +1,10 @@
 package com.project.form.model.dto;
 
 import com.project.form.model.Curriculo;
-import com.project.form.model.enums.Escolaridade;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
 
-import java.time.Instant;
 
+// OBJETO QUE EXIBE OS DADOS
 @Data
 public class CurriculoDTOOutput {
 
@@ -27,6 +24,8 @@ public class CurriculoDTOOutput {
 
     private String DataCadastro;
 
+    private Boolean desqualificado;
+
 
     public CurriculoDTOOutput(Curriculo curriculo) {
         this.id = curriculo.getId();
@@ -37,6 +36,7 @@ public class CurriculoDTOOutput {
         this.escolaridade = curriculo.getEscolaridade().getValue();
         this.observacoes = curriculo.getObservacoes();
         this.DataCadastro = curriculo.getDataHoraEnvio();
+        this.desqualificado = curriculo.getDesqualificado();
     }
 
 }

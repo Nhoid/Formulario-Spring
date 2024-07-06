@@ -14,6 +14,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+
+// ENTIDADE CURRICULO
 @Getter
 @Setter
 @Entity
@@ -60,6 +62,10 @@ public class Curriculo {
     @Column(name = "arquivo_url", nullable = false)
     private String arquivoUrl;
 
+    @NotNull
+    @Column(name = "desqualificado")
+    private Boolean desqualificado;
+
     @Size(max = 45)
     @NotNull
     @Column(name = "ip_envio", nullable = false, length = 45)
@@ -77,22 +83,7 @@ public class Curriculo {
         this.escolaridade = Escolaridade.valueOf( curriculoDTOInput.getEscolaridade() );
         this.observacoes = curriculoDTOInput.getObservacoes();
         this.dataHoraEnvio = Instant.now();
-    }
-
-    @Override
-    public String toString() {
-        return "Curriculo{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", vaga=" + vaga +
-                ", escolaridade=" + escolaridade +
-                ", observacoes='" + observacoes + '\'' +
-                ", arquivoUrl='" + arquivoUrl + '\'' +
-                ", ipEnvio='" + ipEnvio + '\'' +
-                ", dataHoraEnvio=" + dataHoraEnvio +
-                '}';
+        this.desqualificado = false;
     }
 
     public String getDataHoraEnvio() {
@@ -100,5 +91,9 @@ public class Curriculo {
                 .withZone(ZoneId.systemDefault());
 
         return  formatter.format(this.dataHoraEnvio);
+    }
+
+    public void changeStatus(){
+        this.desqualificado = !this.desqualificado;
     }
 }

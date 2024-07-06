@@ -23,7 +23,7 @@ public class AsyncConfiguration {
     @Value("${spring.task.execution.thread-name-prefix}")
     private String threadNamePrefix;
 
-
+    // CONFIGURACOES MULTITHREAD
     @Bean(name = "taskExecutor")
     public Executor taskExecutor() {
 

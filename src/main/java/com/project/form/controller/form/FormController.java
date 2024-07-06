@@ -28,22 +28,21 @@ public class FormController {
 
     private final VagaService vagaService;
 
-    private final Logger logger = Logger.getLogger(FormController.class.getName());
-
+    // RECEBE FORMULARIO
     @PostMapping("/form/send")
     public String register(@Valid CurriculoDTOInput curriculoDTOInput, HttpServletRequest request ) throws MessagingException {
 
-        Curriculo curriculo = new Curriculo(curriculoDTOInput);
+        Curriculo curriculo = new Curriculo(curriculoDTOInput); // CRIA NOVO OBJETO CURRICULO
 
-        curriculo.setVaga(vagaService.findById(curriculoDTOInput.getCargo()));
+        curriculo.setVaga(vagaService.findById(curriculoDTOInput.getCargo())); // ADICIONA A VAGA SELECIONADA
 
-        curriculo.setIpEnvio(request.getRemoteAddr());
+        curriculo.setIpEnvio(request.getRemoteAddr()); // PEGA IP DO CANDIDATO
 
-        curriculo.setArquivoUrl(storageService.store(curriculoDTOInput.getMultipartFile(), curriculo.getNome()));
+        curriculo.setArquivoUrl(storageService.store(curriculoDTOInput.getMultipartFile(), curriculo.getNome())); // GUARDA ARQUIVO ENVIADO EM UMA PASTA E RETORNA O ENDERECO
 
-        curriculoService.save(curriculo);
+        curriculoService.save(curriculo); // SALVA CURRICULO
 
-        emailService.mailResponse(curriculo);
+        emailService.mailResponse(curriculo); // ENVIA EMAIL
 
         return "redirect:/form";
     }

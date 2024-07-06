@@ -7,12 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.nio.file.Path;
-import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+
+// REPOSITORIO CURRICYLO
 @Repository
 public interface CurriculoRepository extends CrudRepository<Curriculo, Long> {
 
@@ -21,6 +21,8 @@ public interface CurriculoRepository extends CrudRepository<Curriculo, Long> {
     @Query("select curriculo.arquivoUrl from Curriculo curriculo where curriculo.id = :id")
     String findArquivoUrlById(@Param("id") Long id);
 
-    @Query("select curriculo from Curriculo curriculo where curriculo.dataHoraEnvio BETWEEN :inicio AND :fim")
-    List<CurriculoDTOOutput> findAllByDate(Instant inicio, Instant fim);
+    @Query("select curriculo from Curriculo curriculo where curriculo.dataHoraEnvio BETWEEN :inicio AND :fim AND curriculo.desqualificado = :desqualificado")
+    List<CurriculoDTOOutput> findAllByDate(Instant inicio, Instant fim, Boolean desqualificado);
+
+    Optional<Curriculo> findById(Long id);
 }

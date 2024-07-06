@@ -2,6 +2,10 @@ package com.project.form.exception;
 
 
 import com.project.form.model.dto.CurriculoDTOInput;
+import com.project.form.services.VagaService;
+import com.project.form.services.impl.VagaServiceImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +18,14 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import java.util.logging.Logger;
 
 @ControllerAdvice
+@Data
 public class FormHandler {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
+    private VagaService vagaService;
+
+    // VALIDACAO DE CAMPOS DO FORMULARIO
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String invalidArgument(MethodArgumentNotValidException ex, Model model){
@@ -31,6 +39,7 @@ public class FormHandler {
         return "form";
     }
 
+    // VALIDACAO DO TAMANHO DO ARQUIVO
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
     public String handleMaxUploadSizeExceeded(MaxUploadSizeExceededException ex, Model model) {
@@ -38,6 +47,8 @@ public class FormHandler {
         model.addAttribute("curriculo", new CurriculoDTOInput());
 
         model.addAttribute("sizeError", "Tamanho do arquivo excede limite");
+
+        model.addAttribute("vagas", vagaService.findAll());
 
         return "form";
     }

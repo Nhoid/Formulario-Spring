@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+// OBJETO QUE RECEBE OS DADOS ENVIADOS
 @Data
 public class CurriculoDTOInput {
 

@@ -18,13 +18,13 @@ public class DataBaseConfiguration {
 
     //CONFIGURACOES DEFINIDAS NO APPLICATION PROPERTIES
     @Value("${spring.datasource.url}")
-    private String url;
+    private String url; // URL BANCO DE DADOS
 
     @Value("${spring.datasource.username}")
-    private String usarname;
+    private String usarname; // USERNAME BANCO DE DADOS
 
     @Value("${spring.datasource.password}")
-    private String password;
+    private String password; // PASSWORD BANCO DE DADOS
 
 
     //CONFIGURACAO DO FLYWAY

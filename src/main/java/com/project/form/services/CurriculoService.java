@@ -5,6 +5,7 @@ import com.project.form.model.dto.CurriculoDTOOutput;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 public interface CurriculoService {
 
@@ -16,5 +17,7 @@ public interface CurriculoService {
 
     String findCurriculoById(Long id);
 
-    List<CurriculoDTOOutput> findAllByDate(Instant inicio, Instant fim);
+    List<CurriculoDTOOutput> findAllByDate(Instant inicio, Instant fim, Boolean qualificado);
+
+    Curriculo findById(Long id);
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 
+
+// SERVICE VAGA
 @Service
 @AllArgsConstructor
 public class VagaServiceImpl implements VagaService {
@@ -17,22 +19,27 @@ public class VagaServiceImpl implements VagaService {
 
     @Override
     public void save(Vaga vaga) {
-        vagaRepository.save(vaga);
+        vagaRepository.save(vaga); // SALVA VAGA
     }
 
     @Override
     public Collection<Vaga> findAll() {
-        return (Collection<Vaga>) vagaRepository.findAll();
+        return (Collection<Vaga>) vagaRepository.findAll(); // ENCONTRA TODAS AS VAGAS
+    }
+
+    @Override
+    public Collection<Vaga> findAllAtiva() {
+        return vagaRepository.findAllAtiva(); // ENCONTRA VAGAS ATIVAS
     }
 
     @Override
     public Vaga findById(Long id) {
-        return vagaRepository.findById(id).orElse(null);
+        return vagaRepository.findById(id).orElse(null); // ENCONTRA VAGA POR ID
     }
 
     @Override
     public void delete(Long id) {
-        vagaRepository.deleteById(id);
+        vagaRepository.deleteById(id); // DELETA VAGA
     }
 
 

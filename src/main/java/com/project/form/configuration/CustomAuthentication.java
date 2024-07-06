@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+// AUTHENTICACAO PERSONALIZADA
+// AUTHENTICACAO DE ADMIN SIMPLES
 @Component
 public class CustomAuthentication implements AuthenticationProvider {
 
@@ -27,11 +29,11 @@ public class CustomAuthentication implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
+        String username = authentication.getName(); // PEGA O USERNAME FORNECIDO
+        String password = authentication.getCredentials().toString(); // PEGA A SENHA FORNECIDA
 
-        if (username.equals(this.username) && password.equals(this.password)) {
-            return authenticateAgainstThirdPartyAndGetAuthentication(username, password);
+        if (username.equals(this.username) && password.equals(this.password)) { // COMPARA
+            return authenticateAgainstThirdPartyAndGetAuthentication(username, password); //RETORNA USUARIO
         }
 
         return null;

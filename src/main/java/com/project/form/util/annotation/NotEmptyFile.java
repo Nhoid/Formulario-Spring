@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.lang.annotation.*;
 import java.lang.reflect.Field;
 
+
+// VERIFICA SE CANDIDATO ENVIOU ALGUM ARQUIVO
 @Documented
 @Constraint(validatedBy = {NotEmptyFileValidator.class})
 @Target({ElementType.FIELD})

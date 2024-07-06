@@ -36,37 +36,36 @@
                 <p class="card-text">
                     <strong>Registrados:</strong> <span th:text="${vaga.getCount()}">0</span>
                 </p>
+                    <p class="text-right">
+                        <span th:if="${vaga.getAtiva()}" class="text-success">Ativa</span>
+                        <span th:if="${!vaga.getAtiva()}" class="text-danger">Desativada</span>
+                    </p>
 
-                <button type="button" class="btn btn-danger btnRemover" th:data-vaga-id="${vaga.getId()}">Remover</button>
+                    <form th:action="@{vaga/chagestatus/{id}(id=${vaga.getId()})}" method="POST">
+                        <button type="submit" class="btn btn-danger btnDesativar" th:if="${vaga.getAtiva()}">Desativar</button>
+                        <button type="submit" class="btn btn-success btnAtivar" th:if="${!vaga.getAtiva()}">Ativar</button>
+                    </form>
             </div>
         </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:inline="javascript">
+<script>
     $(document).ready(function() {
-        $('.container').on('click', '.btnRemover', function() {
-            var vagaId = $(this).data('vaga-id');
-            console.log(vagaId);
-            if (confirm('Deseja realmente remover esta vaga? todos os candidatos serão desclassificados.')) {
-                $.ajax({
-                    url: 'vaga/remove/' + vagaId,
-                    type: 'DELETE',
-                    success: function(result) {
-                        // Atualize a interface ou faça qualquer ação necessária após a exclusão
-                        alert('Vaga removida com sucesso!');
-                        // Remover o cartão da vaga após a exclusão
-                        $('#vaga-' + vagaId).remove();
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Ocorreu um erro ao remover a vaga: ' + error);
-                    }
-                });
+        $('.btnDesativar').click(function(event) {
+            var btnText = $(this).text().trim(); // Captura o texto do botão clicado
+
+            // Se o botão clicado for Desativar, mostra um aviso
+            if (btnText === 'Desativar') {
+                if (!confirm('Ao desativar esta vaga, todos os inscritos serão desqualificados. Deseja continuar?')) {
+                    event.preventDefault(); // Cancela o envio do formulário se o usuário cancelar
+                }
             }
         });
     });
 </script>
+
 
 </body>
 </html>

@@ -13,6 +13,8 @@ import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+
+// ENTIDADE VAGA
 @Getter
 @Setter
 @Entity
@@ -33,6 +35,10 @@ public class Vaga {
     @Column(name = "data_de_criacao", nullable = false)
     private Instant dataDeCriacao;
 
+    @NotNull
+    @Column(name = "ativa")
+    private Boolean ativa;
+
     @OneToMany(mappedBy = "vaga")
     private Set<Curriculo> curriculos = new LinkedHashSet<>();
 
@@ -41,6 +47,10 @@ public class Vaga {
 
     public Vaga(VagaDTOInput vaga) {
         this.nomeDaVaga = vaga.getNome();
+        this.ativa = true;
         this.dataDeCriacao = Instant.now();
+    }
+    public void chageStatus(){
+        this.ativa = !this.ativa;
     }
 }

@@ -19,16 +19,17 @@ public class VagaView {
 
     private final Logger logger = Logger.getLogger(VagaView.class.getName());
 
+    // PAGINA DE MANIPULACAO DE VAGAS
     @GetMapping("/admin/vaga")
     public String vaga(Model model) {
 
-        List<Vaga> vagas = (List<Vaga>) vagaService.findAll();
+        List<Vaga> vagas = (List<Vaga>) vagaService.findAll(); // PEGA TODAS AS VAGAS
 
-        vagas.forEach(vaga -> vaga.setCount(vaga.getCurriculos().size()));
+        vagas.forEach(vaga -> vaga.setCount(vaga.getCurriculos().size())); // PEGA QUANTOS INSCRITOS TEM EM CADA
 
-        model.addAttribute("vagas", vagas);
+        model.addAttribute("vagas", vagas); // ADICIONA AS VAGAS AS PAGINAS
 
-        model.addAttribute("vaga", new VagaDTOInput());
+        model.addAttribute("vaga", new VagaDTOInput()); // PEGA NOVA VAGA QUE  QUEIRA ADICIONAR
 
         return "vaga";
     }

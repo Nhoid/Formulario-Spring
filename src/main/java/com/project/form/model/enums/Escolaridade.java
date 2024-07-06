@@ -2,6 +2,8 @@ package com.project.form.model.enums;
 
 import lombok.Getter;
 
+
+// ENUM DE ESCOLARIDADE
 @Getter
 public enum Escolaridade {
 

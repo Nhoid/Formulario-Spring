@@ -17,16 +17,15 @@ public class FormView {
 
     private final VagaService vagaService;
 
+    // INTERFACE DO FORMULARIO
     @GetMapping("/form")
     public String form(Model model) {
 
         Long defaultVagaId = 1L;
 
-        model.addAttribute("curriculo", new CurriculoDTOInput());
+        model.addAttribute("curriculo", new CurriculoDTOInput()); // ADICIONA INPUT DE DADOS
 
-        List<Vaga> vagas = vagaService.findAll().stream().toList();
-
-        model.addAttribute("vagas", vagas);
+        model.addAttribute("vagas", vagaService.findAllAtiva()); // EXIBE VAGAS ATIVAS
         model.addAttribute("defaultVaga", defaultVagaId);
 
         return "form" ;

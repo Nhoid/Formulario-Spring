@@ -12,6 +12,8 @@ public interface VagaService {
 
     public Collection<Vaga> findAll();
 
+    public Collection<Vaga> findAllAtiva();
+
     public Vaga findById(Long id);
 
     void delete(Long id);

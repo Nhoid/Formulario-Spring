@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,26 +24,34 @@ public class VagaController {
 
     private final CurriculoService curriculoService;
 
+    // ADICIONAR UMA NOVA VAGA
     @PostMapping("admin/vaga/add")
     public String addVaga(@Valid VagaDTOInput vaga) {
 
-        Vaga novaVaga =  new Vaga(vaga);
+        Vaga novaVaga =  new Vaga(vaga); // CRIA UMA NOVA INSTANCIA
 
-        vagaService.save(novaVaga);
+        vagaService.save(novaVaga); // SALVA
 
         return "redirect:/admin/vaga";
     }
 
-    @DeleteMapping("admin/vaga/remove/{id}")
-    public ResponseEntity<?> removeVaga(@PathVariable("id") Long id){
+    // ATIVAR/DESATIVAR UMA VAGA
+    @PostMapping("admin/vaga/chagestatus/{id}")
+    public String desativarVaga(@PathVariable("id") Long id){
 
-        Set<Curriculo> curriculos = vagaService.findById(id).getCurriculos();
+        Vaga vaga = vagaService.findById(id); // PROCURA A VAGA
 
-        curriculos.forEach(curriculo -> curriculoService.delete(curriculo.getId()));
+        Set<Curriculo> curriculos = vaga.getCurriculos(); // PEGA TODOS OS CURRICULOS INSCRITOS NA VAGA
 
-        vagaService.delete(id);
+        curriculos.forEach(curriculo -> curriculo.setDesqualificado(true)); // DESQUALIFICA TODOS OS CURRICULOS
 
-        return ResponseEntity.ok().build();
+        curriculos.forEach(curriculoService::save); // ATUALIZA OS CURRICULOS
+
+        vaga.chageStatus(); // MUDA STATUS DA VAGA
+
+        vagaService.save(vaga); // ATUALIZA A VAGA
+
+        return "redirect:/admin/vaga";
     }
 
 

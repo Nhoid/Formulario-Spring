@@ -22,13 +22,15 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+
+// SERVICO DE ARMAZENAMENTO
 @Service
 public class StorageServiceImpl implements StorageService {
 
     private final Path rootLocation;
 
     @Autowired()
-    public StorageServiceImpl(StorageProperties storageProperties) {
+    public StorageServiceImpl(StorageProperties storageProperties) { // RECEBE CONFIGURACOES
 
         if(storageProperties.getLocation().trim().isEmpty()){
             throw new StorageException("Local para armazenar currículos não foi definido.");
@@ -37,6 +39,7 @@ public class StorageServiceImpl implements StorageService {
         this.rootLocation = Paths.get(storageProperties.getLocation());
     }
 
+    // ARMAZENA ARQUIVO NA PASTA
     @Override
     public String store(MultipartFile file, String name) {
         try {
@@ -44,19 +47,19 @@ public class StorageServiceImpl implements StorageService {
                 throw new StorageException("Arquivo vázio.");
             }
 
-            // Nome do arquivo original
+            // NOME ORIGINAL DO ARQUIVP
             String originalFilename = Objects.requireNonNull(file.getOriginalFilename());
 
-            // Novo nome do arquivo, incluindo o nome da pessoa
+            // NOME ORIGINAL + NOME DO CANDIDADO
             String newFilename = name + "_" + originalFilename;
 
-            // Caminho do arquivo de destino
+            // CAMINHO ONDE FOI SALVO
             Path destinationFile = this.rootLocation.resolve(
                             Paths.get(newFilename))
                     .normalize().toAbsolutePath();
 
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
-                // Checagem de securança
+                // CHECAGEM DE SEGURANCA
                 throw new StorageException(
                         "Não pode armazenar no diretório atual.");
             }
@@ -64,7 +67,7 @@ public class StorageServiceImpl implements StorageService {
                 Files.copy(inputStream, destinationFile,
                         StandardCopyOption.REPLACE_EXISTING);
             }
-            // Retorna local onde foi armazenado + nome
+            // RETORNA LOCAL ONDE FOI ARMAZENADO
             return destinationFile.toString() ;
 
         } catch (IOException e) {
@@ -83,7 +86,7 @@ public class StorageServiceImpl implements StorageService {
         }
 
     }
-
+    // CARREGA ARQUIVO COM BASE NO NOME DELE
     @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
@@ -105,22 +108,24 @@ public class StorageServiceImpl implements StorageService {
             throw new StorageFileNotFoundException("Não foi possível ler currículo: " + filename, e);
         }
     }
-
+    // DELETA TODOS ARQRUIVOS
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
+    // DELETA UM ARQUIVO
     @Override
     public void delete(Path path) {
         path.toFile().delete();
     }
 
+    // METODO DE INICIACAO
     @Override
     @PostConstruct
     public void init() {
         try {
-            Files.createDirectories(rootLocation);
+            Files.createDirectories(rootLocation); // CRIA PASTA SE NAO EXISTIR
         } catch (IOException e) {
             throw new StorageException("Não foi possível iniciar diretório.", e);
         }

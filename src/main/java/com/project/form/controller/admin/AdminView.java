@@ -27,52 +27,58 @@ public class AdminView {
 
     private VagaService vagaService;
 
-
+    //INTERFACE DE ADMIN
     @GetMapping("/admin")
     public String admin(Model model){
 
-        List<Vaga> vaga = (List<Vaga>) vagaService.findAll();
+        List<Vaga> vaga = (List<Vaga>) vagaService.findAll(); // PEGA TODAS AS VAGAS QUE EXITEM
 
-        List<CurriculoDTOOutput> curriculos = curriculoService.findAll();
+        List<CurriculoDTOOutput> curriculos = curriculoService.findAll(); //PEGA TODOS OS CURRICULOS
 
-        model.addAttribute("curriculos", curriculos);
+        model.addAttribute("curriculos", curriculos); // COLOCA NA PAGINA
 
-        model.addAttribute("vagas", vaga);
+        model.addAttribute("vagas", vaga); // COLOCA NA PAGINA
 
         return "admin";
     }
 
+    // FILTRAR CANDIDATOS
     @GetMapping("/admin/filter")
-    public String adminFilter(@RequestParam String dataInicio,
-                              @RequestParam String dataFim,
-                              @RequestParam(required = false, defaultValue = "-1") Long vaga,
+    public String adminFilter(@RequestParam String dataInicio, // DATA DE INICIO D FILTRO
+                              @RequestParam String dataFim, // DATA DO FIM DO FILTRO
+                              @RequestParam(required = false, defaultValue = "-1") Long vaga, // VAGA QUE SERA FILTRADA
+                              @RequestParam(required = false, defaultValue = "false") Boolean vagaquali, // SE VAI QUERER OU NAO CANDIDATOS DEQUALIFICADOS
                               Model model) {
 
+        // INSTANCIA DE DATAS
         Instant from;
         Instant to;
 
+        // PEGA DATAS FORNECIDAS OU DEFINE PADROES
         if (dataInicio.isBlank()) from = toInstant("2000-01-01");
         else from = toInstant(dataInicio);
 
         if (dataFim.isBlank()) to = Instant.now();
         else to = toInstant(dataFim);
 
-        List<CurriculoDTOOutput> curriculos = curriculoService.findAllByDate(from, to);
+        // PEGA TODOS OS CURRICULOS COM BASE NOS FILTROS
+        List<CurriculoDTOOutput> curriculos = curriculoService.findAllByDate(from, to, vagaquali);
 
+        // FILTRA POR VAGA, SE FOR NECESSARIO
         if (vaga != -1){
             Vaga vagaSelecionada = vagaService.findById(vaga);
 
             curriculos = curriculos.stream().filter(curriculoDTOOutput -> Objects.equals(curriculoDTOOutput.getCargoDesejado(), vagaSelecionada.getNomeDaVaga())).toList();
-
         }
 
-        model.addAttribute("vagas", vagaService.findAll());
+        model.addAttribute("vagas", vagaService.findAll()); // ADICIONA NA PAGINA
 
-        model.addAttribute("curriculos", curriculos);
+        model.addAttribute("curriculos", curriculos); // ADICIONA NA PAGINA
 
         return "admin";
     }
 
+    // FUNCAO PARA TRANSFORMAR STRING EM INSTANT
     private Instant toInstant(String data) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

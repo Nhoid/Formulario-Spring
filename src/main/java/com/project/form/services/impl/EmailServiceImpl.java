@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.logging.Logger;
 
+//EMAIL SERVICE
 @Service
 @AllArgsConstructor
 public class EmailServiceImpl implements EmailService {
@@ -23,6 +24,7 @@ public class EmailServiceImpl implements EmailService {
 
     private final Logger logger = Logger.getLogger(EmailServiceImpl.class.getName());
 
+    // ENVIA EMAIL BASICO
     @Override
     public void SendEmail(String to, String subject, String content) {
 
@@ -36,6 +38,7 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
+    // ENVIA EMAIL COM ANEXO
     @Override
     public void sendMessageWithAttachment(String to, String subject, String text, String pathToAttachment) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -53,6 +56,7 @@ public class EmailServiceImpl implements EmailService {
         javaMailSender.send(message);
     }
 
+    //ENVIA EMAIL PARA O CANDIDADO
     @Override
     @Async("taskExecutor")
     public void mailResponse(Curriculo curriculo) throws MessagingException {

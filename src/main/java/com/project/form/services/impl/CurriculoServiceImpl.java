@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+// IMPL DE CURRICULO SERVICE
 @Service
 @AllArgsConstructor
 public class CurriculoServiceImpl implements CurriculoService {
@@ -26,14 +26,14 @@ public class CurriculoServiceImpl implements CurriculoService {
 
 
     public void save(Curriculo curriculo) {
-        curriculoRepository.save(curriculo);
+        curriculoRepository.save(curriculo); // SALVA CURRICULO NO BANCO DE DADOS
     }
 
     public List<CurriculoDTOOutput> findAll(){
-        return curriculoRepository.findAll().stream().map(CurriculoDTOOutput::new).toList();
+        return curriculoRepository.findAll().stream().map(CurriculoDTOOutput::new).toList(); // RETORNA CURRICULOS PARA SEREM EXIBIDOS
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) { // DELETA USUARIO E CURRICULO
         Path path = Paths.get(findCurriculoById(id));
 
         path.toFile().delete();
@@ -42,14 +42,17 @@ public class CurriculoServiceImpl implements CurriculoService {
     }
 
     @Override
-    public String findCurriculoById(Long id) {
+    public String findCurriculoById(Long id) { // RETORNA ENDERECO DO CURRICULO COM BASE NO ID
         return curriculoRepository.findArquivoUrlById(id);
     }
 
     @Override
-    public List<CurriculoDTOOutput> findAllByDate(Instant inicio, Instant fim) {
-        return curriculoRepository.findAllByDate(inicio, fim);
+    public List<CurriculoDTOOutput> findAllByDate(Instant inicio, Instant fim, Boolean desqualificado) {
+        return curriculoRepository.findAllByDate(inicio, fim, desqualificado); // RETORNA CURRICULOS FITLRADOS
     }
 
+    public Curriculo findById(Long id) { // ENCONTRA CURRICULO COM BASE EM ID
+        return curriculoRepository.findById(id).get();
+    }
 
 }

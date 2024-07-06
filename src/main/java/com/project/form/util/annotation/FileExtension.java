@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.lang.annotation.*;
 
-
+// ANNOTATION PERSONALIZADA PARA VERIFICACAO DE TIPO DE ARUIVO
 @Documented
 @Constraint(validatedBy = {FileExtensionValidator.class})
 @Target({ElementType.FIELD})

@@ -7,6 +7,7 @@ CREATE TABLE curriculos (
                             escolaridade ENUM('FUNDAMENTAL_INCOMPLETO', 'FUNDAMENTAL', 'MEDIO_INCOMPLETO', 'MEDIO', 'SUPERIOR_INCOMPLETO', 'SUPERIOR') NOT NULL,
                             observacoes TEXT,
                             arquivo_url VARCHAR(255) NOT NULL,
+                            desqualificado BOOLEAN NOT NULL DEFAULT FALSE,
                             ip_envio VARCHAR(45) NOT NULL,
                             data_hora_envio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             CONSTRAINT fk_vaga FOREIGN KEY (vaga_id) REFERENCES vagas(id)

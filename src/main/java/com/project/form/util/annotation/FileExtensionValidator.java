@@ -22,15 +22,15 @@ public class FileExtensionValidator implements ConstraintValidator<FileExtension
         String originalName = multipartFile.getOriginalFilename();
 
         if (originalName == null || originalName.trim().isEmpty() || originalName.isBlank()) {
-            return true; // Arquivo nao enviado, NotEmptyFile vai lancar exception
+            return true; // ARQUIVO NAO ENVIADO, NotEmptyFile VAI LANCAR EXCESSAO
         }
 
         for (String extension : allowedExtensions) {
             if (originalName.toLowerCase().endsWith(extension.toLowerCase())) {
-                return true; // Extensao de arquivo valida
+                return true; // EXTENSAO DE ARQUIVO VALIDA
             }
         }
 
-        return false; // nao encontrou extensao valida de arquivo
+        return false; // NAO ENCONTROU EXTENSAO DE ARQUIVO VALIDA
     }
 }

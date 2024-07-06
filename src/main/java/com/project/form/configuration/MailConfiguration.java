@@ -35,6 +35,7 @@ public class MailConfiguration {
     @Value("${spring.mail.properties.debug}")
     private boolean debug;
 
+    // CONFIGURACOES DO EMAIL SENDER
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -47,8 +48,6 @@ public class MailConfiguration {
         mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
-        //props.put("mail.transport.protocol", protocol);
-        //props.put("mail.smtp.auth", auth);
         props.put("mail.smtp.starttls.enable", starttlsEnable);
         props.put("mail.smtp.starttls.required", starttlsRequired);
         props.put("mail.debug", debug);
