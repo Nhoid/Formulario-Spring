@@ -51,7 +51,6 @@ Além do Spring Framework, este projeto utiliza as seguintes tecnologias princip
 - **Spring Boot DevTools**: Para melhorias no desenvolvimento como reinicialização automática.
 - **MySQL Connector/J**: Driver JDBC para MySQL.
 - **Lombok**: Para reduzir o código boilerplate.
-- **Spring Boot Starter Test**: Para testes na aplicação Spring Boot.
 - **Spring Boot Starter Security**: Para segurança de aplicações web.
 - **Spring Boot Starter Validation**: Para validação de dados.
 - **Spring Boot Starter Thymeleaf**: Para integração do Thymeleaf como mecanismo de template.
