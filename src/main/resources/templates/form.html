@@ -31,7 +31,7 @@
                     <h2 class="text-center">Formulário</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" role="form" th:action="@{/form/send}" th:object="${curriculo}" enctype="multipart/form-data">
+                    <form method="post" role="form" th:action="@{form}" th:object="${curriculo}" enctype="multipart/form-data">
 
                         <!-- Nome -->
                         <div class="form-floating mb-3">
@@ -45,6 +45,8 @@
                             <input type="email" class="form-control" id="floatingEmail" placeholder="Digite seu email" name="email" th:field="*{email}">
                             <label for="floatingEmail">Email:</label>
                             <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
+                            <!--/*@thymesVar id="emailWarning" type="java.lang.Boolean"*/-->
+                            <p class="text-danger" th:if="${emailWarning}">Email já cadastrado</p>
                         </div>
 
                         <!-- Telefone -->
@@ -52,6 +54,8 @@
                             <input type="tel" class="form-control" id="floatingTelefone" placeholder="Digite seu telefone" name="telefone" th:field="*{telefone}">
                             <label for="floatingTelefone">Telefone:</label>
                             <p th:errors="*{telefone}" class="text-danger" th:if="${#fields.hasErrors('telefone')}"></p>
+                            <!--/*@thymesVar id="telefoneWarning" type="java.lang.Boolean"*/-->
+                            <p class="text-danger" th:if="${telefoneWarning}">Telefone já cadastrado</p>
                         </div>
 
                         <!-- Cargo Pretendido -->

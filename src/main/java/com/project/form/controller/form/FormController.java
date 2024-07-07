@@ -29,7 +29,7 @@ public class FormController {
     private final VagaService vagaService;
 
     // RECEBE FORMULARIO
-    @PostMapping("/form/send")
+    @PostMapping("/form")
     public String register(@Valid CurriculoDTOInput curriculoDTOInput, HttpServletRequest request ) throws MessagingException {
 
         Curriculo curriculo = new Curriculo(curriculoDTOInput); // CRIA NOVO OBJETO CURRICULO
