@@ -60,6 +60,27 @@ Além do Spring Framework, este projeto utiliza as seguintes tecnologias princip
 
 Essas tecnologias foram escolhidas para proporcionar uma base robusta e eficiente para o desenvolvimento do sistema de Formulário de Currículo, abrangendo desde o acesso a dados até a segurança e a interface do usuário.
 
+### Organização de Pacotes
+
+- **configuration**: Contém classes de configuração, como configuração do banco de dados, autenticação personalizada, configuração de e-mails, e configurações de segurança.
+
+- **controller**: Agrupa os controladores da aplicação. No subpacote `admin`, há endpoints relacionados à administração do sistema, como login de administrador e manipulação de vagas. No subpacote `form`, há endpoints relacionados ao formulário de currículo.
+
+- **exception**: Classes para tratamento de exceções, como `FormHandler` que trata erros e os apresenta ao usuário de forma adequada.
+
+- **model**: Contém as entidades (`Vaga`, `Curriculo`) e DTOs (Data Transfer Objects) que são usados para transferência de dados entre camadas.
+
+- **repository**: Repositórios para acesso aos dados das entidades (`VagaRepository`, `CurriculoRepository`).
+
+- **services**: Interfaces e implementações dos serviços da aplicação, como serviços de e-mail, vaga, currículo e armazenamento.
+
+- **storage**: Funcionalidades relacionadas ao armazenamento de arquivos, incluindo exceções personalizadas e propriedades.
+
+- **util**: Classes utilitárias, como anotações para validação de arquivos.
+
+- **FormProjectApplication.java**: Classe principal de inicialização do Spring Boot.
+
+
 
 ### Configuração do Ambiente
 
@@ -89,30 +110,6 @@ Para configurar o ambiente de desenvolvimento deste projeto em Spring, siga os p
     - Um arquivo `docker-compose.yml` está disponível na pasta principal do projeto para facilitar a configuração do ambiente de banco de dados via Docker. Certifique-se de ter o Docker instalado e execute `docker-compose up -d` para iniciar o container MySQL conforme configurado no arquivo.
 
 Estes passos garantem que você tenha um ambiente configurado para desenvolver e executar o projeto de Formulário de Currículo usando Spring.
-
-
-### Organização de Pacotes
-
-- **configuration**: Contém classes de configuração, como configuração do banco de dados, autenticação personalizada, configuração de e-mails, e configurações de segurança.
-
-- **controller**: Agrupa os controladores da aplicação. No subpacote `admin`, há endpoints relacionados à administração do sistema, como login de administrador e manipulação de vagas. No subpacote `form`, há endpoints relacionados ao formulário de currículo.
-
-- **exception**: Classes para tratamento de exceções, como `FormHandler` que trata erros e os apresenta ao usuário de forma adequada.
-
-- **model**: Contém as entidades (`Vaga`, `Curriculo`) e DTOs (Data Transfer Objects) que são usados para transferência de dados entre camadas.
-
-- **repository**: Repositórios para acesso aos dados das entidades (`VagaRepository`, `CurriculoRepository`).
-
-- **services**: Interfaces e implementações dos serviços da aplicação, como serviços de e-mail, vaga, currículo e armazenamento.
-
-- **storage**: Funcionalidades relacionadas ao armazenamento de arquivos, incluindo exceções personalizadas e propriedades.
-
-- **util**: Classes utilitárias, como anotações para validação de arquivos.
-
-- **FormProjectApplication.java**: Classe principal de inicialização do Spring Boot.
-
-
-
 
 
 
